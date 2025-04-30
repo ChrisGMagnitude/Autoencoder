@@ -13,7 +13,7 @@ model = ViT(
 
 learner = Dino(
     model,
-    image_size = 400,
+    image_size = 416,
     hidden_layer = 'to_latent',        # hidden layer name or index, from which to extract the embedding
     projection_hidden_size = 256,      # projector network hidden dimension
     projection_layers = 4,             # number of layers in projection network
@@ -29,7 +29,7 @@ learner = Dino(
 opt = torch.optim.Adam(learner.parameters(), lr = 3e-4)
 
 def sample_unlabelled_images():
-    return torch.randn(20, 3, 400, 400)
+    return torch.randn(20, 3, 416, 416)
 
 for epoch in range(100):
     print('epoch =',epoch)
