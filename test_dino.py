@@ -1,5 +1,5 @@
 import torch
-from vit_pytorch import ViT, Dino
+from vit-pytorch import ViT, Dino
 
 model = ViT(
     image_size = 256,
