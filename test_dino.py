@@ -31,7 +31,8 @@ opt = torch.optim.Adam(learner.parameters(), lr = 3e-4)
 def sample_unlabelled_images():
     return torch.randn(20, 3, 256, 256)
 
-for _ in range(100):
+for epoch in range(100):
+    print('epoch =',epoch)
     images = sample_unlabelled_images()
     loss = learner(images)
     opt.zero_grad()
