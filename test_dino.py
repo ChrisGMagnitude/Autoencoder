@@ -46,8 +46,11 @@ for epoch in range(100):
     count = 0
     for images in train_data_loader:
         count += len(images)
-        print(images)
         print(count,len(images))
+
+        images = torch.stack(count)
+        print(images.shape)
+
         loss = learner(images)
     
         opt.zero_grad()
