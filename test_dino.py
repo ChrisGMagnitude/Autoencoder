@@ -4,7 +4,7 @@ from dataLoader import MagClassDataset
 import tqdm
 import os
 
-batch_size=256
+batch_size=128#256
 train_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/train.hdf5')
 val_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/valid.hdf5',augment=False)
 
@@ -42,7 +42,7 @@ opt = torch.optim.Adam(learner.parameters(), lr = 3e-4)
 def sample_unlabelled_images():
     return torch.randn(20, 3, 600, 600)
 
-for epoch in range(100):
+for epoch in range(3):
     learner.train()
     print('epoch =',epoch)
     count = 0
@@ -58,7 +58,7 @@ for epoch in range(100):
         loss.backward()
         opt.step()
         print('train loss',loss.item())
-        if i==10:
+        if i==3:
             break
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
     epoch_train_loss = running_train_loss/(count)
@@ -77,7 +77,7 @@ for epoch in range(100):
             val_loss = learner(images)
             running_val_loss += val_loss.item() * images.shape[0]
 
-            if i==10:
+            if i==3:
                 break
 
     epoch_val_loss = running_val_loss/(count)
