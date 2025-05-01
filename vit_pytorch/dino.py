@@ -225,8 +225,8 @@ class Dino(nn.Module):
 
         # local and global crops
 
-        self.local_crop = T.RandomResizedCrop((image_size, image_size), scale = (0.05, local_upper_crop_scale))
-        self.global_crop = T.RandomResizedCrop((image_size, image_size), scale = (global_lower_crop_scale, 1.))
+        self.local_crop = T.RandomResizedCrop((image_size, image_size), scale = (0.5, 0.7))
+        self.global_crop = T.RandomResizedCrop((image_size, image_size), scale = (0.6, 0.7))
 
         self.student_encoder = NetWrapper(net, num_classes_K, projection_hidden_size, projection_layers, layer = hidden_layer)
 
