@@ -116,11 +116,11 @@ class ViT(nn.Module):
 
         cls_tokens = repeat(self.cls_token, '1 1 d -> b 1 d', b = b)
         x = torch.cat((cls_tokens, x), dim=1)
-        print('type(x)',type(x))
-        print('x.shape',x.shape)
-        print('type(self.pos_embedding[:, :(n + 1)])',type(self.pos_embedding[:, :(n + 1)]))
-        print('self.pos_embedding[:, :(n + 1)].shape',self.pos_embedding[:, :(n + 1)].shape)
-        print('self.pos_embedding.shape',self.pos_embedding.shape)
+        #print('type(x)',type(x))
+        #print('x.shape',x.shape)
+        #print('type(self.pos_embedding[:, :(n + 1)])',type(self.pos_embedding[:, :(n + 1)]))
+        #print('self.pos_embedding[:, :(n + 1)].shape',self.pos_embedding[:, :(n + 1)].shape)
+        #print('self.pos_embedding.shape',self.pos_embedding.shape)
 
         x += self.pos_embedding[:, :(n + 1)]
         x = self.dropout(x)

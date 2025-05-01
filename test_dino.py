@@ -46,6 +46,7 @@ for epoch in range(100):
     count = 0
     for images in train_data_loader:
         count += len(images)
+        print(images)
         print(count,len(images))
         loss = learner(images)
     
