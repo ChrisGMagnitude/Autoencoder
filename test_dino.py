@@ -45,12 +45,10 @@ for epoch in range(100):
     print('epoch =',epoch)
     count = 0
     for images in train_data_loader:
-        print(type(images[0]))
         images = images[0]
-        print(images.shape)
         
         count += images.shape[0]
-        print(count,len(images))
+        print(count,len(train_dataset))
 
         loss = learner(images)
     
