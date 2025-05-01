@@ -32,6 +32,7 @@ def sample_unlabelled_images():
     return torch.randn(20, 3, 400, 400)
 
 for epoch in range(100):
+    learner.train()
     print('epoch =',epoch)
     images = sample_unlabelled_images()
     loss = learner(images)
@@ -40,7 +41,10 @@ for epoch in range(100):
     loss.backward()
     opt.step()
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
-    val_los = learner.eval(sample_unlabelled_images())
+
+    learner.eval()
+    with torch.no_grad():
+        val_loss = learner(sample_unlabelled_images())
     print('val loss',val_loss.item())
 
 # save your improved network
