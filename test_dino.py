@@ -10,7 +10,7 @@ import json
 model_path = r'/root/field_data/test/ml/cg/DINO Models'
 train_path = r'/root/docker_data/Autoencoder/hdf5/train.hdf5'
 valid_path = r'/root/docker_data/Autoencoder/hdf5/valid.hdf5'
-initial_weights = 'default'
+initial_weights = r'/root/field_data/test/ml/cg/DINO Models/First attempt at DINO - ViT Autoencoding - 2025-05-01 144953'#'default'
 current_time = datetime.now()
 architecture = 'DINO ViT'
 description = 'First attempt at DINO - ViT Autoencoding'
@@ -55,6 +55,9 @@ model = ViT(
     mlp_dim = 2048
 )
 
+if initial_weights!='default':
+    model.load_state_dict(torch.load(os.path.join(initial_weights,'ViT-Params.pt'), weights_only=True))
+
 learner = Dino(
     model,
     image_size = image_size,
@@ -70,6 +73,10 @@ learner = Dino(
     center_moving_average_decay = 0.9, # moving average of teacher centers - paper showed anywhere from 0.9 to 0.999 was ok
 )
 
+if initial_weights!='default':
+    learner.load_state_dict(torch.load(os.path.join(initial_weights,'DINO-Params.pt'), weights_only=True))
+
+    
 opt = torch.optim.Adam(learner.parameters(), lr = learning_rate)
 
 all_train_loss = []
