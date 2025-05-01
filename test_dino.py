@@ -17,7 +17,7 @@ description = 'First attempt at DINO - ViT Autoencoding'
 image_size = 416
 batch_size=256
 learning_rate = 5e-3
-num_epochs = 2
+num_epochs = 4
 max_batches = -1
 
 train_dataset = MagClassDataset(train_path)
