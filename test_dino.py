@@ -4,7 +4,7 @@ from dataLoader import MagClassDataset
 import tqdm
 import os
 import matplotlib.pyplot as plt
-import datetime.datetime as datetime
+from datetime import datetime
 
 model_path = r'/mnt/field/test/ml/cg/DINO Models'
 train_path = r'/root/docker_data/Autoencoder/hdf5/train.hdf5'
