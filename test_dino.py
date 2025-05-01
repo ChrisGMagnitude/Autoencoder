@@ -87,7 +87,7 @@ for epoch in range(num_epochs):
     print('epoch =',epoch)
     count = 0
     running_train_loss = 0
-    for i,images in tqdm.tqdm(enumerate(train_data_loader)):
+    for i,images in enumerate(tqdm.tqdm(train_data_loader)):
         images = images[0]
         count += images.shape[0]
         
@@ -111,7 +111,7 @@ for epoch in range(num_epochs):
     running_val_loss = 0
     count = 0 
     with torch.no_grad():
-        for i,images in tqdm.tqdm(enumerate(val_data_loader)):
+        for i,images in enumerate(tqdm.tqdm(val_data_loader)):
             images = images[0]
             count += images.shape[0]
 
