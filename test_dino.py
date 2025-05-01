@@ -56,9 +56,10 @@ for epoch in range(100):
         opt.zero_grad()
         loss.backward()
         opt.step()
+        print('train loss',loss.item())
         print('Loading Images')
 
-    print('train loss',loss.item())
+    
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
 
     learner.eval()
