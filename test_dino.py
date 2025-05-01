@@ -10,15 +10,15 @@ import json
 model_path = r'/root/field_data/test/ml/cg/DINO Models'
 train_path = r'/root/docker_data/Autoencoder/hdf5/train.hdf5'
 valid_path = r'/root/docker_data/Autoencoder/hdf5/valid.hdf5'
-initial_weights = r'/root/field_data/test/ml/cg/DINO Models/First attempt at DINO - ViT Autoencoding - 2025-05-01 144953'#'default'
+initial_weights = 'default'#r'/root/field_data/test/ml/cg/DINO Models/First attempt at DINO - ViT Autoencoding - 2025-05-01 144953'#'default'
 current_time = datetime.now()
 architecture = 'DINO ViT'
 description = 'First attempt at DINO - ViT Autoencoding'
 image_size = 416
-batch_size=128#256
-learning_rate = 5e-4
+batch_size=256
+learning_rate = 5e-3
 num_epochs = 2
-max_batches = 3
+max_batches = -1
 
 train_dataset = MagClassDataset(train_path)
 val_dataset = MagClassDataset(valid_path,augment=False)
