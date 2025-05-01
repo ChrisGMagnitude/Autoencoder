@@ -6,7 +6,7 @@ model = ViT(
     patch_size = 32,
     num_classes = 1000,
     dim = 1024,
-    dim_head = 169,
+    #dim_head = 64,#169
     depth = 6,
     heads = 8,
     mlp_dim = 2048
@@ -16,7 +16,7 @@ learner = Dino(
     model,
     image_size = 416,
     hidden_layer = 'to_latent',        # hidden layer name or index, from which to extract the embedding
-    projection_hidden_size = 416,      # projector network hidden dimension
+    projection_hidden_size = 256,#416,      # projector network hidden dimension
     projection_layers = 4,             # number of layers in projection network
     num_classes_K = 65336,             # output logits dimensions (referenced as K in paper)
     student_temp = 0.9,                # student temperature
