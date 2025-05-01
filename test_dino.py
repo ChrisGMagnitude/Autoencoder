@@ -42,7 +42,7 @@ opt = torch.optim.Adam(learner.parameters(), lr = 3e-4)
 def sample_unlabelled_images():
     return torch.randn(20, 3, 600, 600)
 
-for epoch in range(3):
+for epoch in range(2):
     learner.train()
     print('epoch =',epoch)
     count = 0
@@ -62,7 +62,7 @@ for epoch in range(3):
             break
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
     epoch_train_loss = running_train_loss/(count)
-    print('epoch_val_loss',epoch_train_loss.item())
+    print('epoch_train_loss',epoch_train_loss)
 
     print()
 
@@ -81,7 +81,7 @@ for epoch in range(3):
                 break
 
     epoch_val_loss = running_val_loss/(count)
-    print('epoch_val_loss',epoch_val_loss.item())
+    print('epoch_val_loss',epoch_val_loss)
 
 # save your improved network
 torch.save(model.state_dict(), './pretrained-net.pt')
