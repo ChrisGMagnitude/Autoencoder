@@ -17,7 +17,7 @@ class MagClassDataset(Dataset):
                  augment=True, crop_ranges=[[-1,2],[-3,5],[-10,20]], crop_jitter=[0.25,0.5,2], max_white_noise=0.05):
         """
         Arguments:
-            csv_file (string): Path to the HDF5 file.
+            hdf5_file (string): Path to the HDF5 file.
             transform (callable, optional): Optional transform to be applied
                 on a sample.
         """
@@ -41,6 +41,7 @@ class MagClassDataset(Dataset):
 
         image = self.fh["images"][idx]
         image[np.isnan(image)] = 0
+        image[image==-9999] = 0
         image = self.clip_and_normalise_data(image)
         image = self.apply_transforms(image)
 

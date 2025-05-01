@@ -3,12 +3,12 @@ from vit_pytorch import ViT,Dino
 from dataLoader import MagClassDataset
 import tqdm
 
-batch_size=128
+batch_size=256
 train_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/train.hdf5')
 val_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/valid.hdf5',augment=False)
 
-train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)  
-val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,shuffle=True)  
+train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True,num_workers=os.cpu_count())  
+val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,shuffle=True,num_workers=os.cpu_count())  
 
 model = ViT(
     image_size = 416,
@@ -45,6 +45,7 @@ for epoch in range(100):
     learner.train()
     print('epoch =',epoch)
     count = 0
+    running_train_loss = 0
     print('Loading Images')
     for images in tqdm.tqdm(train_data_loader):
         images = images[0]
@@ -53,20 +54,27 @@ for epoch in range(100):
 
         print('Training model')
         loss = learner(images)
+        running_train_loss += loss.item() * images.shape[0]
     
         opt.zero_grad()
         loss.backward()
         opt.step()
         print('train loss',loss.item())
         print('Loading Images')
-
-    
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
+    epoch_train_loss = running_train_loss/(count*batch_size)
+    print('epoch_val_loss',epoch_train_loss.item())
+
+    print()
 
     learner.eval()
+    running_val_loss = 0
     with torch.no_grad():
-        val_loss = learner(sample_unlabelled_images())
-    print('val loss',val_loss.item())
+        for images in tqdm.tqdm(train_data_loader):
+            val_loss = learner(sample_unlabelled_images())
+            running_val_loss += val_loss.item() * images.shape[0]
+    epoch_val_loss = running_val_loss/(count*batch_size)
+    print('epoch_val_loss',epoch_val_loss.item())
 
 # save your improved network
 torch.save(model.state_dict(), './pretrained-net.pt')
