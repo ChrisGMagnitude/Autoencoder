@@ -47,34 +47,40 @@ for epoch in range(100):
     print('epoch =',epoch)
     count = 0
     running_train_loss = 0
-    print('Loading Images')
-    for images in tqdm.tqdm(train_data_loader[:10]):
+    for i,images in tqdm.tqdm(enumerate(train_data_loader)):
         images = images[0]
         count += images.shape[0]
-        print(count,len(train_dataset))
-
-        #print('Training model')
-        #loss = learner(images)
-        #running_train_loss += loss.item() * images.shape[0]
+        
+        loss = learner(images)
+        running_train_loss += loss.item() * images.shape[0]
     
-        #opt.zero_grad()
-        #loss.backward()
-        #opt.step()
-        #print('train loss',loss.item())
-        print('Loading Images')
+        opt.zero_grad()
+        loss.backward()
+        opt.step()
+        print('train loss',loss.item())
+        if i==10:
+            break
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
-    epoch_train_loss = running_train_loss/(count*batch_size)
+    epoch_train_loss = running_train_loss/(count)
     print('epoch_val_loss',epoch_train_loss.item())
 
     print()
 
     learner.eval()
     running_val_loss = 0
+    count = 0 
     with torch.no_grad():
-        for images in tqdm.tqdm(train_data_loader):
-            val_loss = learner(sample_unlabelled_images())
+        for i,images in tqdm.tqdm(enumerate(train_data_loader)):
+            images = images[0]
+            count += images.shape[0]
+
+            val_loss = learner(images)
             running_val_loss += val_loss.item() * images.shape[0]
-    epoch_val_loss = running_val_loss/(count*batch_size)
+
+            if i==10:
+                break
+
+    epoch_val_loss = running_val_loss/(count)
     print('epoch_val_loss',epoch_val_loss.item())
 
 # save your improved network
