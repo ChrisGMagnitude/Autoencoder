@@ -13,7 +13,7 @@ model = ViT(
 
 learner = Dino(
     model,
-    image_size = 412,
+    image_size = 416,
     hidden_layer = 'to_latent',        # hidden layer name or index, from which to extract the embedding
     projection_hidden_size = 256,      # projector network hidden dimension
     projection_layers = 4,             # number of layers in projection network
