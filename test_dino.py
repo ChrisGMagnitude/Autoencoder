@@ -5,6 +5,7 @@ import tqdm
 import os
 import matplotlib.pyplot as plt
 from datetime import datetime
+import json
 
 model_path = r'/root/field_data/test/ml/cg/DINO Models'
 train_path = r'/root/docker_data/Autoencoder/hdf5/train.hdf5'
