@@ -2,7 +2,7 @@ import torch
 from vit_pytorch import ViT,Dino
 
 model = ViT(
-    image_size = 256,
+    image_size = 416,
     patch_size = 32,
     num_classes = 1000,
     dim = 1024,
