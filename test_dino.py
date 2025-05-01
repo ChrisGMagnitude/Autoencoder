@@ -8,8 +8,8 @@ batch_size=256
 train_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/train.hdf5')
 val_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/valid.hdf5',augment=False)
 
-train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True,num_workers=os.cpu_count())  
-val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,shuffle=True,num_workers=os.cpu_count())  
+train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)#,num_workers=os.cpu_count())  
+val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,shuffle=True)#,num_workers=os.cpu_count())  
 
 model = ViT(
     image_size = 416,
