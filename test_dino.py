@@ -35,6 +35,7 @@ for epoch in range(100):
     print('epoch =',epoch)
     images = sample_unlabelled_images()
     loss = learner(images)
+    print(loss)
     opt.zero_grad()
     loss.backward()
     opt.step()
