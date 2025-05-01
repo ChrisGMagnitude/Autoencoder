@@ -48,12 +48,9 @@ for epoch in range(100):
         print(type(images[0]))
         images = images[0]
         print(images.shape)
-        stop
-        count += len(images)
+        
+        count += len(images.shape[0])
         print(count,len(images))
-
-        images = torch.stack(images)
-        print(images.shape)
 
         loss = learner(images)
     
