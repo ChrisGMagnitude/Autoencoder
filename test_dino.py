@@ -16,7 +16,7 @@ architecture = 'DINO ViT'
 description = 'First attempt at DINO - ViT Autoencoding'
 image_size = 416
 batch_size=128#256
-learning_rate = 3e-4
+learning_rate = 5e-4
 num_epochs = 2
 max_batches = 3
 
