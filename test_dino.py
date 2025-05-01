@@ -6,7 +6,7 @@ import os
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-model_path = r'/mnt/field/test/ml/cg/DINO Models'
+model_path = r'/root/field_data/test/ml/cg/DINO Models'
 train_path = r'/root/docker_data/Autoencoder/hdf5/train.hdf5'
 valid_path = r'/root/docker_data/Autoencoder/hdf5/valid.hdf5'
 initial_weights = 'default'
