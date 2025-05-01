@@ -1,5 +1,14 @@
 import torch
 from vit_pytorch import ViT,Dino
+from dataLoader import MagClassDataset
+
+batch_size=16
+num_workers=32
+train_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/train.hdf5')
+val_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5valid.hdf5',augment=False)
+
+train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,pin_memory=True,num_workers=num_workers,shuffle=True)  
+val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,pin_memory=True,num_workers=num_workers,shuffle=True)  
 
 model = ViT(
     image_size = 416,
@@ -35,12 +44,15 @@ def sample_unlabelled_images():
 for epoch in range(100):
     learner.train()
     print('epoch =',epoch)
-    images = sample_unlabelled_images()
-    loss = learner(images)
+    for images in train_data_loader:
+        print(images.shape)
+        loss = learner(images)
+    
+        opt.zero_grad()
+        loss.backward()
+        opt.step()
+
     print('train loss',loss.item())
-    opt.zero_grad()
-    loss.backward()
-    opt.step()
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
 
     learner.eval()
