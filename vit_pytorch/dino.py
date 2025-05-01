@@ -210,10 +210,10 @@ class Dino(nn.Module):
                 T.GaussianBlur((3, 3), (1.0, 2.0)),
                 p = 0.2
             ),
-            RandomRotation(
+            T.RandomRotation(
                 360
             ),
-            
+
             
         )
 
