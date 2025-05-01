@@ -35,11 +35,13 @@ for epoch in range(100):
     print('epoch =',epoch)
     images = sample_unlabelled_images()
     loss = learner(images)
-    print(loss)
+    print('train loss',loss.item())
     opt.zero_grad()
     loss.backward()
     opt.step()
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
+    val_los = learner.eval(sample_unlabelled_images())
+    print('val loss',val_loss.item())
 
 # save your improved network
 torch.save(model.state_dict(), './pretrained-net.pt')
