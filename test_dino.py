@@ -35,7 +35,7 @@ log['crop_ranges'] = train_dataset.crop_ranges
 log['crop_jitter'] = train_dataset.crop_jitter
 log['max_white_noise'] = train_dataset.max_white_noise
 log['batch_size'] = batch_size
-log['lr'] = lr
+log['lr'] = learning_rate
 log['num_epochs'] = num_epochs
 log['max_batches'] = max_batches
 
