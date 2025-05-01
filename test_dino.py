@@ -49,7 +49,7 @@ for epoch in range(100):
         images = images[0]
         print(images.shape)
         
-        count += len(images.shape[0])
+        count += images.shape[0]
         print(count,len(images))
 
         loss = learner(images)
