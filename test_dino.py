@@ -46,6 +46,8 @@ for epoch in range(100):
     count = 0
     for images in train_data_loader:
         print(type(images[0]))
+        images = images[0]
+        print(images.shape)
         stop
         count += len(images)
         print(count,len(images))
