@@ -3,7 +3,7 @@ from vit_pytorch import ViT,Dino
 from dataLoader import MagClassDataset
 
 batch_size=16
-num_workers=32
+num_workers=4
 train_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/train.hdf5')
 val_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/valid.hdf5',augment=False)
 
