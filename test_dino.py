@@ -3,12 +3,11 @@ from vit_pytorch import ViT,Dino
 from dataLoader import MagClassDataset
 
 batch_size=16
-num_workers=4
 train_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/train.hdf5')
 val_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/valid.hdf5',augment=False)
 
-train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,pin_memory=True,num_workers=num_workers,shuffle=True)  
-val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,pin_memory=True,num_workers=num_workers,shuffle=True)  
+train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)  
+val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,shuffle=True)  
 
 model = ViT(
     image_size = 416,
