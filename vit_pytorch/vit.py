@@ -120,6 +120,8 @@ class ViT(nn.Module):
         print('x.shape',x.shape)
         print('type(self.pos_embedding[:, :(n + 1)])',type(self.pos_embedding[:, :(n + 1)]))
         print('self.pos_embedding[:, :(n + 1)].shape',self.pos_embedding[:, :(n + 1)].shape)
+        print('self.pos_embedding.shape',self.pos_embedding.shape)
+
         x += self.pos_embedding[:, :(n + 1)]
         x = self.dropout(x)
 
