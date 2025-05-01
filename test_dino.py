@@ -44,17 +44,19 @@ for epoch in range(100):
     learner.train()
     print('epoch =',epoch)
     count = 0
+    print('Loading Images')
     for images in train_data_loader:
         images = images[0]
-        
         count += images.shape[0]
         print(count,len(train_dataset))
 
+        print('Training model')
         loss = learner(images)
     
         opt.zero_grad()
         loss.backward()
         opt.step()
+        print('Loading Images')
 
     print('train loss',loss.item())
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
