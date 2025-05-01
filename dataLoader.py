@@ -23,15 +23,6 @@ class MagClassDataset(Dataset):
         """
         self.hdf5_file = hdf5_file
         self.fh = h5py.File(self.hdf5_file, "r")
-        
-        if binary_label:
-            label = self.fh["labels"]
-            label = [l.decode() for l in label]
-            binary_label = np.zeros(len(label))
-            binary_label[np.array(label)=='archae']=1
-            self.labels = binary_label.astype(float)
-        else:
-            self.labels = self.fh["labels"]
         self.classes = np.unique(self.labels)
         self.crop_ranges = crop_ranges
         self.crop_jitter = crop_jitter
@@ -49,17 +40,12 @@ class MagClassDataset(Dataset):
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
-        
         image = self.fh["images"][idx]
         image[np.isnan(image)] = 0
         image = self.clip_and_normalise_data(image)
         image = self.apply_transforms(image)
-        
-        
-        
-        project = self.fh["project"][idx]
 
-        sample = [image, self.labels[idx]]
+        sample = [image]
         
 
         return sample
