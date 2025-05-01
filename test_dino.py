@@ -1,6 +1,7 @@
 import torch
 from vit_pytorch import ViT,Dino
 from dataLoader import MagClassDataset
+import tqdm
 
 batch_size=128
 train_dataset = MagClassDataset(r'/root/docker_data/Autoencoder/hdf5/train.hdf5')
@@ -45,7 +46,7 @@ for epoch in range(100):
     print('epoch =',epoch)
     count = 0
     print('Loading Images')
-    for images in train_data_loader:
+    for images in tqdm.tqdm(train_data_loader):
         images = images[0]
         count += images.shape[0]
         print(count,len(train_dataset))
