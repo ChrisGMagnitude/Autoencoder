@@ -43,8 +43,10 @@ def sample_unlabelled_images():
 for epoch in range(100):
     learner.train()
     print('epoch =',epoch)
+    count = 0
     for images in train_data_loader:
-        print(images.shape)
+        count += len(images)
+        print(count,len(images))
         loss = learner(images)
     
         opt.zero_grad()
