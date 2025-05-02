@@ -275,6 +275,8 @@ class Dino(nn.Module):
         student_temp = None,
         teacher_temp = None
     ):
+        print('dino forward')
+        print('dino 279 x',x.device)
         if return_embedding:
             return self.student_encoder(x, return_projection = return_projection)
 
