@@ -111,6 +111,8 @@ class ViT(nn.Module):
         self.mlp_head = nn.Linear(dim, num_classes)
 
     def forward(self, img):
+        print('vit 114 img',img.get_device())
+        print('vit 114 self',self.get_device())
         x = self.to_patch_embedding(img)
         b, n, _ = x.shape
 
