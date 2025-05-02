@@ -96,6 +96,8 @@ for epoch in range(num_epochs):
         images = images[0]
         count += images.shape[0]
         
+        images.to(device)
+
         loss = learner(images)
         running_train_loss += loss.item() * images.shape[0]
     
