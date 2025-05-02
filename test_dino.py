@@ -121,6 +121,7 @@ for epoch in range(num_epochs):
     with torch.no_grad():
         for i,images in enumerate(tqdm.tqdm(val_data_loader)):
             images = images[0]
+            images = images.to(device)
             count += images.shape[0]
 
             val_loss = learner(images)
