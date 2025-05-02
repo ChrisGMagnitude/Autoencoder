@@ -17,7 +17,7 @@ description = 'Run 3 DINOViT - mid 5e-4 lr - full epoch'
 image_size = 416
 batch_size = 128
 learning_rate = 5e-4
-num_epochs = 3
+num_epochs = 85
 max_batches_train = -1
 max_batches_val = -1
 
