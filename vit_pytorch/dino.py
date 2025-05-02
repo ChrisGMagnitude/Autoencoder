@@ -164,6 +164,7 @@ class NetWrapper(nn.Module):
             self._register_hook()
 
         self.hidden.clear()
+        print('dino 1175 x',x.device)
         _ = self.net(x)
         hidden = self.hidden[x.device]
         self.hidden.clear()
@@ -172,6 +173,7 @@ class NetWrapper(nn.Module):
         return hidden
 
     def forward(self, x, return_projection = True):
+        print('dino 1175 x',x.device)
         embed = self.get_embedding(x)
         if not return_projection:
             return embed
