@@ -59,7 +59,7 @@ if initial_weights!='default':
 
 device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
 print(f"Using {device} device")
-#model.to(device)
+model.to(device)
 
 learner = Dino(
     model,
@@ -76,11 +76,10 @@ learner = Dino(
     center_moving_average_decay = 0.9, # moving average of teacher centers - paper showed anywhere from 0.9 to 0.999 was ok
 )
 
-#learner.to(device)
-
 if initial_weights!='default':
     learner.load_state_dict(torch.load(os.path.join(initial_weights,'DINO-Params.pt'), weights_only=True))
 
+learner.to(device)
     
 opt = torch.optim.Adam(learner.parameters(), lr = learning_rate)
 
