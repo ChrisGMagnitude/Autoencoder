@@ -91,12 +91,15 @@ for epoch in range(num_epochs):
     print('epoch =',epoch)
     count = 0
     running_train_loss = 0
+    print('loading Images')
     for i,images in enumerate(tqdm.tqdm(train_data_loader)):
         images = images[0]
         count += images.shape[0]
         
+
         images = images.to(device)
 
+        print('Training')
         loss = learner(images)
         running_train_loss += loss.item() * images.shape[0]
     
@@ -106,6 +109,7 @@ for epoch in range(num_epochs):
         print('train loss',loss.item())
         if i==max_batches:
             break
+        print('loading Images')
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
     epoch_train_loss = running_train_loss/(count)
     print('epoch_train_loss',epoch_train_loss)
