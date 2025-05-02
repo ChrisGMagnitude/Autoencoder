@@ -164,7 +164,6 @@ class NetWrapper(nn.Module):
             self._register_hook()
 
         self.hidden.clear()
-        print('dino 167 x',x.device)
         _ = self.net(x)
         hidden = self.hidden[x.device]
         self.hidden.clear()
@@ -173,7 +172,6 @@ class NetWrapper(nn.Module):
         return hidden
 
     def forward(self, x, return_projection = True):
-        print('dino 175 x',x.device)
         embed = self.get_embedding(x)
         if not return_projection:
             return embed
@@ -227,7 +225,6 @@ class Dino(nn.Module):
         self.local_crop = T.RandomResizedCrop((image_size, image_size), scale = (0.5, 0.7))
         self.global_crop = T.RandomResizedCrop((image_size, image_size), scale = (0.6, 0.7))
 
-        print('Creating NetWrapper for student')
         self.student_encoder = NetWrapper(net, num_classes_K, projection_hidden_size, projection_layers, layer = hidden_layer)
 
         self.teacher_encoder = None
@@ -243,11 +240,9 @@ class Dino(nn.Module):
 
         # get device of network and make wrapper same device
         device = get_module_device(net)
-        print('device',device)
         self.to(device)
 
         # send a mock image tensor to instantiate singleton parameters
-        print('send a mock image tensor to instantiate singleton parameters')
         self.forward(torch.randn(2, 3, image_size, image_size, device=device))
 
     @singleton('teacher_encoder')
@@ -275,8 +270,6 @@ class Dino(nn.Module):
         student_temp = None,
         teacher_temp = None
     ):
-        print('dino forward')
-        print('dino 279 x',x.device)
         if return_embedding:
             return self.student_encoder(x, return_projection = return_projection)
 

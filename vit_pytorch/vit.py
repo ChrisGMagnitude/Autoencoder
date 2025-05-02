@@ -111,18 +111,11 @@ class ViT(nn.Module):
         self.mlp_head = nn.Linear(dim, num_classes)
 
     def forward(self, img):
-        print('vit 114 img',img.device)
         x = self.to_patch_embedding(img)
         b, n, _ = x.shape
 
         cls_tokens = repeat(self.cls_token, '1 1 d -> b 1 d', b = b)
         x = torch.cat((cls_tokens, x), dim=1)
-        #print('type(x)',type(x))
-        #print('x.shape',x.shape)
-        #print('type(self.pos_embedding[:, :(n + 1)])',type(self.pos_embedding[:, :(n + 1)]))
-        #print('self.pos_embedding[:, :(n + 1)].shape',self.pos_embedding[:, :(n + 1)].shape)
-        #print('self.pos_embedding.shape',self.pos_embedding.shape)
-
         x += self.pos_embedding[:, :(n + 1)]
         x = self.dropout(x)
 
