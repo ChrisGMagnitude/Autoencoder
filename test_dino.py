@@ -76,7 +76,7 @@ learner = Dino(
     center_moving_average_decay = 0.9, # moving average of teacher centers - paper showed anywhere from 0.9 to 0.999 was ok
 )
 
-model.to(learner)
+learner.to(device)
 
 if initial_weights!='default':
     learner.load_state_dict(torch.load(os.path.join(initial_weights,'DINO-Params.pt'), weights_only=True))
