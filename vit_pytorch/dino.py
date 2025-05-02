@@ -128,7 +128,7 @@ class NetWrapper(nn.Module):
         self.projection_num_layers = projection_num_layers
         self.output_dim = output_dim
 
-        self.hidden = {}}
+        self.hidden = {}
         self.hook_registered = False
 
     def _find_layer(self):
