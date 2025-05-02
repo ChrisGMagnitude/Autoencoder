@@ -227,6 +227,7 @@ class Dino(nn.Module):
         self.local_crop = T.RandomResizedCrop((image_size, image_size), scale = (0.5, 0.7))
         self.global_crop = T.RandomResizedCrop((image_size, image_size), scale = (0.6, 0.7))
 
+        print('Creating NetWrapper for student')
         self.student_encoder = NetWrapper(net, num_classes_K, projection_hidden_size, projection_layers, layer = hidden_layer)
 
         self.teacher_encoder = None
@@ -246,6 +247,7 @@ class Dino(nn.Module):
         self.to(device)
 
         # send a mock image tensor to instantiate singleton parameters
+        print('send a mock image tensor to instantiate singleton parameters')
         self.forward(torch.randn(2, 3, image_size, image_size, device=device))
 
     @singleton('teacher_encoder')
