@@ -59,7 +59,7 @@ if initial_weights!='default':
 
 device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
 print(f"Using {device} device")
-model.to(device)
+#model.to(device)
 
 learner = Dino(
     model,
@@ -96,7 +96,7 @@ for epoch in range(num_epochs):
         images = images[0]
         count += images.shape[0]
         
-        images.to(device)
+        #images.to(device)
 
         loss = learner(images)
         running_train_loss += loss.item() * images.shape[0]
