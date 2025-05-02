@@ -240,6 +240,7 @@ class Dino(nn.Module):
 
         # get device of network and make wrapper same device
         device = get_module_device(net)
+        print('device',device)
         self.to(device)
 
         # send a mock image tensor to instantiate singleton parameters
