@@ -130,32 +130,34 @@ for epoch in range(num_epochs):
     epoch_val_loss = running_val_loss/(count)
     print('epoch_val_loss',epoch_val_loss)
     all_val_loss.append(epoch_val_loss)
-# save your improved network
 
-log['train_loss'] = all_train_loss
-log['val_loss'] = all_val_loss
-
-if initial_weights == 'default':    
-    with open(os.path.join(log['model_path'],log['name'],'training_log.json'), 'w') as f:
-        record = {}
-        record[0] = log
-        json.dump(record, f)
-else:
-    with open(os.path.join(log['initial_weights'],'training_log.json'), 'r') as f:
-        record = json.load(f)
-        record[len(record)] = log
-    with open(os.path.join(log['model_path'],log['name'],'training_log.json'), 'w') as f:
-        json.dump(record, f)
-
-plt.plot(all_train_loss)
-plt.plot(all_val_loss)
-plt.legend(['training loss','validation loss'])
-plt.xlabel('Epoch')
-plt.ylabel('Binary Cross Entropy')
-plt.grid()
+    plt.plot(all_train_loss)
+    plt.plot(all_val_loss)
+    plt.legend(['training loss','validation loss'])
+    plt.xlabel('Epoch')
+    plt.ylabel('Binary Cross Entropy')
+    plt.grid()
         
-plt.savefig(os.path.join(log['model_path'],log['name'],'loss.png'))
-plt.clf()
+    plt.savefig(os.path.join(log['model_path'],log['name'],str(epoch)+'_loss.png'))
+    plt.clf()
 
-torch.save(model.state_dict(), os.path.join(log['model_path'],log['name'],'ViT-Params.pt'))
-torch.save(learner.state_dict(), os.path.join(log['model_path'],log['name'],'DINO-Params.pt'))
+    torch.save(model.state_dict(), os.path.join(log['model_path'],log['name'],'ViT-Params.pt'))
+    torch.save(learner.state_dict(), os.path.join(log['model_path'],log['name'],'DINO-Params.pt'))
+    # save your improved network
+
+    log['train_loss'] = all_train_loss
+    log['val_loss'] = all_val_loss
+
+    if initial_weights == 'default':    
+        with open(os.path.join(log['model_path'],log['name'],'training_log.json'), 'w') as f:
+            record = {}
+            record[0] = log
+            json.dump(record, f)
+    else:
+        with open(os.path.join(log['initial_weights'],'training_log.json'), 'r') as f:
+            record = json.load(f)
+            record[len(record)] = log
+        with open(os.path.join(log['model_path'],log['name'],'training_log.json'), 'w') as f:
+            json.dump(record, f)
+
+
