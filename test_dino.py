@@ -103,7 +103,7 @@ for epoch in range(num_epochs):
         opt.zero_grad()
         loss.backward()
         opt.step()
-        print('train loss',loss.item())
+        #print('train loss',loss.item())
         if i==max_batches:
             break
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
