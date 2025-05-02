@@ -97,6 +97,7 @@ for epoch in range(num_epochs):
         
         images.to(device)
 
+        print('test_dino 100 images',images.device)
         loss = learner(images)
         running_train_loss += loss.item() * images.shape[0]
     
