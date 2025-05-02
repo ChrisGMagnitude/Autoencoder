@@ -42,8 +42,7 @@ log['max_batches'] = max_batches
 
 os.mkdir(os.path.join(log['model_path'],log['name']))
 
-device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
-print(f"Using {device} device")
+
 
 model = ViT(
     image_size = image_size,
@@ -57,6 +56,10 @@ model = ViT(
 
 if initial_weights!='default':
     model.load_state_dict(torch.load(os.path.join(initial_weights,'ViT-Params.pt'), weights_only=True))
+
+device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
+print(f"Using {device} device")
+model.to(device)
 
 learner = Dino(
     model,
