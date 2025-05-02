@@ -15,10 +15,11 @@ current_time = datetime.now()
 architecture = 'DINO ViT'
 description = 'Run 1 DINOViT Autoencoding - high 5e-3 lr'
 image_size = 416
-batch_size = 128
+batch_size = 256
 learning_rate = 5e-3
 num_epochs = 4
-max_batches = -1
+max_batches_train = 30
+max_batches_val = 4
 
 train_dataset = MagClassDataset(train_path)
 val_dataset = MagClassDataset(valid_path,augment=False)
@@ -39,7 +40,8 @@ log['max_white_noise'] = train_dataset.max_white_noise
 log['batch_size'] = batch_size
 log['lr'] = learning_rate
 log['num_epochs'] = num_epochs
-log['max_batches'] = max_batches
+log['max_batches_train'] = max_batches_train
+log['max_batches_val'] = max_batches_val
 
 os.mkdir(os.path.join(log['model_path'],log['name']))
 
@@ -104,7 +106,7 @@ for epoch in range(num_epochs):
         loss.backward()
         opt.step()
         #print('train loss',loss.item())
-        if i==max_batches:
+        if i==max_batches_train:
             break
     learner.update_moving_average() # update moving average of teacher encoder and teacher centers
     epoch_train_loss = running_train_loss/(count)
@@ -124,7 +126,7 @@ for epoch in range(num_epochs):
             val_loss = learner(images)
             running_val_loss += val_loss.item() * images.shape[0]
 
-            if i==max_batches:
+            if i==max_batches_val:
                 break
 
     epoch_val_loss = running_val_loss/(count)
