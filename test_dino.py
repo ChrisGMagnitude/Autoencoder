@@ -95,7 +95,7 @@ for epoch in range(num_epochs):
         images = images[0]
         count += images.shape[0]
         
-        images.to(device)
+        images = images.to(device)
 
         print('test_dino 100 images',images.device)
         loss = learner(images)
