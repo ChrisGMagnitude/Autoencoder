@@ -154,7 +154,7 @@ for epoch in range(num_epochs):
     print('epoch_val_loss',epoch_val_loss)
     print('min(all_val_loss)',min(all_val_loss))
     print('all_val_loss',all_val_loss)
-    if epoch_val_loss < min(all_val_loss):
+    if epoch_val_loss <= min(all_val_loss):
         torch.save(model.state_dict(), os.path.join(log['model_path'],log['name'],'ViT-Params-minloss.pt'))
         torch.save(learner.state_dict(), os.path.join(log['model_path'],log['name'],'DINO-Params-minloss.pt'))
 
