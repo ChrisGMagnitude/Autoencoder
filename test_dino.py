@@ -19,8 +19,8 @@ image_size = 416
 batch_size = 128
 learning_rate = 5e-4
 num_epochs = 85
-max_batches_train = -1
-max_batches_val = -1
+max_batches_train = 3
+max_batches_val = 3
 early_stopping_epochs = 10
 
 train_dataset = MagClassDataset(train_path)
@@ -151,6 +151,9 @@ for epoch in range(num_epochs):
     torch.save(learner.state_dict(), os.path.join(log['model_path'],log['name'],'DINO-Params.pt'))
     # save your improved network
 
+    print('epoch_val_loss',epoch_val_loss)
+    print('min(all_val_loss)',min(all_val_loss))
+    print('all_val_loss',all_val_loss)
     if epoch_val_loss < min(all_val_loss):
         torch.save(model.state_dict(), os.path.join(log['model_path'],log['name'],'ViT-Params-minloss.pt'))
         torch.save(learner.state_dict(), os.path.join(log['model_path'],log['name'],'DINO-Params-minloss.pt'))
@@ -173,6 +176,9 @@ for epoch in range(num_epochs):
 
     
 
+    print('print(all_val_loss)',all_val_loss)
+    print('len(all_val_loss)',len(all_val_loss))
+    print('np.argmin(all_val_loss)',np.argmin(all_val_loss))
     if len(all_val_loss) - np.argmin(all_val_loss) > early_stopping_epochs:
         break
 
