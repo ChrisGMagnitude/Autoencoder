@@ -20,6 +20,7 @@ learning_rate = 5e-4
 num_epochs = 85
 max_batches_train = -1
 max_batches_val = -1
+early_stopping_epochs = 10
 
 train_dataset = MagClassDataset(train_path)
 val_dataset = MagClassDataset(valid_path,augment=False)
@@ -42,6 +43,7 @@ log['lr'] = learning_rate
 log['num_epochs'] = num_epochs
 log['max_batches_train'] = max_batches_train
 log['max_batches_val'] = max_batches_val
+log['early_stopping_epochs'] = early_stopping_epochs
 
 os.mkdir(os.path.join(log['model_path'],log['name']))
 
@@ -148,6 +150,11 @@ for epoch in range(num_epochs):
     torch.save(learner.state_dict(), os.path.join(log['model_path'],log['name'],'DINO-Params.pt'))
     # save your improved network
 
+    if epoch_val_loss < min(all_val_loss):
+        torch.save(model.state_dict(), os.path.join(log['model_path'],log['name'],'ViT-Params-minloss.pt'))
+        torch.save(learner.state_dict(), os.path.join(log['model_path'],log['name'],'DINO-Params-minloss.pt'))
+
+
     log['train_loss'] = all_train_loss
     log['val_loss'] = all_val_loss
 
@@ -162,5 +169,10 @@ for epoch in range(num_epochs):
             record[len(record)] = log
         with open(os.path.join(log['model_path'],log['name'],'training_log.json'), 'w') as f:
             json.dump(record, f)
+
+    
+
+    if len(all_val_loss) - np.argmin(all_val_loss) > early_stopping_epochs:
+        break
 
 
