@@ -61,7 +61,7 @@ os.mkdir(os.path.join(log['model_path'],log['name']))
 #    mlp_dim = 2048
 #)
 
-ViT_pt('B_16_imagenet1k', pretrained=True)
+ViT('B_16_imagenet1k', pretrained=True)
 
 #if initial_weights!='default':
 #    model.load_state_dict(torch.load(os.path.join(initial_weights,'ViT-Params.pt'), weights_only=True))
