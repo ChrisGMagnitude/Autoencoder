@@ -24,12 +24,12 @@ max_batches_train = -1
 max_batches_val = -1
 early_stopping_epochs = 10
 
-train_dataset = MagClassDataset(train_path)
-val_dataset = MagClassDataset(valid_path,augment=False)
+train_dataset = MagClassDataset(train_path,ViT_im_size = image_size)
+val_dataset = MagClassDataset(valid_path,augment=False,ViT_im_size = image_size)
 
 print('os.cpu_count()',os.cpu_count())
-train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True,ViT_im_size = image_size)  
-val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True,ViT_im_size = image_size)  
+train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True)  
+val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True)  
 
 log = {}
 log['model_path'] = model_path
