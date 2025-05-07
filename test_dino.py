@@ -1,5 +1,6 @@
 import torch
-from vit_pytorch import ViT,Dino
+from vit_pytorch import Dino
+from pytorch_pretrained_vit import ViT
 from dataLoader import MagClassDataset
 import tqdm
 import os
@@ -11,10 +12,10 @@ import numpy as np
 model_path = r'/root/field_data/test/ml/cg/DINO Models'
 train_path = r'/root/docker_data/Autoencoder/hdf5/train.hdf5'
 valid_path = r'/root/docker_data/Autoencoder/hdf5/valid.hdf5'
-initial_weights = r'/root/field_data/test/ml/cg/DINO Models/Run 2 DINOViT Autoencoding - high 5e-3 lr - 2025-05-02 154712'#'default'
+initial_weights = 'default'#r'/root/field_data/test/ml/cg/DINO Models/Run 2 DINOViT Autoencoding - high 5e-3 lr - 2025-05-02 154712'#'default'
 current_time = datetime.now()
 architecture = 'DINO ViT'
-description = 'Run 3 DINOViT - mid 5e-4 lr - full epoch'
+description = 'Run 3 DINOViT - mid 5e-4 lr - pretrained Imagenet'
 image_size = 416
 batch_size = 128
 learning_rate = 5e-4
@@ -27,8 +28,8 @@ train_dataset = MagClassDataset(train_path)
 val_dataset = MagClassDataset(valid_path,augment=False)
 
 print('os.cpu_count()',os.cpu_count())
-train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True)  
-val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True)  
+train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True,,ViT_im_size = image_size)  
+val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True,ViT_im_size = image_size)  
 
 log = {}
 log['model_path'] = model_path
@@ -50,18 +51,20 @@ os.mkdir(os.path.join(log['model_path'],log['name']))
 
 
 
-model = ViT(
-    image_size = image_size,
-    patch_size = 32,
-    num_classes = 1000,
-    dim = 1024,
-    depth = 6,
-    heads = 8,
-    mlp_dim = 2048
-)
+#model = ViT(
+#    image_size = image_size,
+#    patch_size = 32,
+#    num_classes = 1000,
+#    dim = 1024,
+#    depth = 6,
+#    heads = 8,
+#    mlp_dim = 2048
+#)
 
-if initial_weights!='default':
-    model.load_state_dict(torch.load(os.path.join(initial_weights,'ViT-Params.pt'), weights_only=True))
+ViT_pt('B_16_imagenet1k', pretrained=True)
+
+#if initial_weights!='default':
+#    model.load_state_dict(torch.load(os.path.join(initial_weights,'ViT-Params.pt'), weights_only=True))
 
 device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
 print(f"Using {device} device")
