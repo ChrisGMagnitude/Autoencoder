@@ -28,7 +28,7 @@ train_dataset = MagClassDataset(train_path)
 val_dataset = MagClassDataset(valid_path,augment=False)
 
 print('os.cpu_count()',os.cpu_count())
-train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True,,ViT_im_size = image_size)  
+train_data_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True,ViT_im_size = image_size)  
 val_data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,shuffle=True,pin_memory=True,drop_last=True,ViT_im_size = image_size)  
 
 log = {}
